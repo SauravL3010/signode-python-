@@ -24,6 +24,13 @@ from updatesJson import get_dir, months, update_date, updates_to_json
 
 def main(c, c_via, c_mar, pickticket_dir, code_dir, picktickets_database):
 
+    def verify_and_createDir(t):
+        for d in temp_path[t]:
+            if not (verify_directory(d)):
+                create_directory(d)
+            else:
+                break ## break if the first dir exists, assume all other exist
+
     try:
         temp_path = paths(fr"{pickticket_dir}")
         code_path = fr"{code_dir}"
@@ -34,16 +41,21 @@ def main(c, c_via, c_mar, pickticket_dir, code_dir, picktickets_database):
         
         
             
-        if not (verify_directory(temp_path["monthly_tickets"])):
-            create_directory(temp_path["monthly_tickets"])
-            
-            for d in temp_path["sub_dir"]:
-                if not (verify_directory(d)):
-                    create_directory(d)
-            
-            for d in temp_path['staged_dir']:
-                if not verify_directory(d):
-                    create_directory(d)
+        # if not (verify_directory(temp_path["monthly_tickets"])):
+        #     create_directory(temp_path["monthly_tickets"])
+        
+        for d in temp_path["sub_dir"]:
+            if not (verify_directory(d)):
+                create_directory(d)
+            else:
+                break ## break if the first dir exists, assume all other exist
+        
+        ## Creates a staged subdirectory 
+        for d in temp_path['staged_dir']:
+            if not verify_directory(d):
+                create_directory(d)
+            else:
+                break
 
     # For email attachments 
 
