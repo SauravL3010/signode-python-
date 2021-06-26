@@ -26,7 +26,7 @@ def months(root):
 
     '''
     ret = get_dir(root)
-    ret = [x for x in ret if os.path.basename(x)] # exclude email_archive
+    ret = [x for x in ret if os.path.basename(x)] 
     return ret
 
 
@@ -51,20 +51,19 @@ def update_date(c, o, s):
         c.update_one({"easyName":o},{"$set":{"invoicedDate": datetime.now()}})
         
 
-def update_attr(c, file, stat, month):
+def update_attr(c, file, stat):
     '''
     updates certain order attributes in Mongo 
     '''
-    current_stat = os.path.basename(stat)[2:] # Printed
     order = os.path.basename(file)[:-4]
+    prev_stat = c.find_one({"easyName":order})['status']
+    current_stat = os.path.basename(stat)[2:] # Printed
 
-    c.update_one({"easyName":order},{"$set":{"status":current_stat}})
+    if prev_stat != current_stat:
+        c.update_one({"easyName":order},{"$set":{"status":current_stat}})
+        update_date(c, order, current_stat)
 
     c.update_one({"easyName":order},{"$set":{"fileDirectory":file}})
-
-    c.update_one({"easyName":order},{"$set":{"month":os.path.basename(month)}})
-
-    update_date(c, order, current_stat)
 
 
 def updates_to_json(c, root):
@@ -82,11 +81,11 @@ def updates_to_json(c, root):
                 makes changes to status and "fileDirectory"
 
     '''
-    for month in months(root):
-        for stat in get_dir(month):
-            if get_dir(stat):
-                for d in get_dir(stat):
-                    for f in list_of_files(d):
-                        update_attr(c, f, stat, month)
-            for f in list_of_files(stat):
-                update_attr(c, f, stat, month)
+    for stat in get_dir(root): # stat = 1-Printed
+        for f in list_of_files(stat):
+            update_attr(c, f, stat)
+
+        if get_dir(stat):
+            for sub in get_dir(stat):
+                for f in list_of_files(sub):
+                    update_attr(c, f, stat)
