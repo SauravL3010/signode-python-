@@ -48,7 +48,7 @@ def main(c, c_via, c_mar, pickticket_dir, code_dir, picktickets_database):
         
         #### veify if required directories and subdirs were created, if not create 
         verify_and_createDir('sub_dir')
-        verify_and_createDir('staged_dir')
+        # verify_and_createDir('staged_dir')
 
         #### deleted dir ERROR output
         nonVerifiedDir_console_output()
