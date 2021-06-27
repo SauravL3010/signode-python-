@@ -81,11 +81,25 @@ def updates_to_json(c, root):
                 makes changes to status and "fileDirectory"
 
     '''
-    for stat in get_dir(root): # stat = 1-Printed
+    for stat in get_dir(root): # 1st layer
+
         for f in list_of_files(stat):
             update_attr(c, f, stat)
 
         if get_dir(stat):
             for sub in get_dir(stat):
+
                 for f in list_of_files(sub):
                     update_attr(c, f, stat)
+
+                if get_dir(sub):
+                    for sub1 in get_dir(sub):
+
+                        for f in list_of_files(sub1):
+                            update_attr(c, f, stat)
+                        
+                        if get_dir(sub1):
+                            for sub2 in get_dir(sub1):
+
+                                for f in list_of_files(sub2):
+                                    update_attr(c, f, stat)

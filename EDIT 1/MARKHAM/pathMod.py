@@ -17,11 +17,11 @@ def paths(root_path):
 
 
     # monthly_tickets = root_path + fr"\{m}"
-    sub_dir = [fr"{root_path}\1-Printed", fr"{root_path}\2-East", fr"{root_path}\3-West", 
-                   fr"{root_path}\4-Parts", fr"{root_path}\5-Quarantine", fr"{root_path}\6-Shipped", fr"{root_path}\7-Invoiced",fr"{root_path}\8-POI"]
+    sub_dir = [fr"{root_path}\1-Printed", fr"{root_path}\2-Carlos", fr"{root_path}\3-Todd", 
+                   fr"{root_path}\4-Parts", fr"{root_path}\5-Other", fr"{root_path}\6-Shipped", fr"{root_path}\7-Invoiced",fr"{root_path}\8-POI"]
 
 
-    staged_dir = [fr"{root_path}\2-East\1-Staged", fr"{root_path}\3-West\1-Staged", fr"{root_path}\4-Parts\1-Staged"]
+    # staged_dir = [fr"{root_path}\2-East\1-Staged", fr"{root_path}\3-West\1-Staged", fr"{root_path}\4-Parts\1-Staged"]
 
     all_paths = {
         'root_path' : root_path,
@@ -30,7 +30,7 @@ def paths(root_path):
 
         # 'monthly_tickets' : monthly_tickets,
         'sub_dir' : sub_dir,
-        'staged_dir' : staged_dir,
+        # 'staged_dir' : staged_dir,
 
     }
     return all_paths
