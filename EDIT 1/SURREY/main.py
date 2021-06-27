@@ -24,28 +24,37 @@ from updatesJson import get_dir, months, update_date, updates_to_json
 
 def main(c, c_via, c_mar, pickticket_dir, code_dir, picktickets_database):
 
-    try:
-        temp_path = paths(fr"{pickticket_dir}")
-        code_path = fr"{code_dir}"
+    temp_path = paths(fr"{pickticket_dir}")
+    code_path = fr"{code_dir}"
 
+    def verify_and_createDir(t):
+        for d in temp_path[t]:
+            if not (verify_directory(d)):
+                create_directory(d)
+            else:
+                break ## if first directory in the list id created, this assumes all the others are created
+    
+    def nonVerifiedDir_console_output():
+        for d in temp_path['sub_dir']:
+            if not verify_directory(d):
+                print_to_console(f"Attention !! Directory {d} was Deleted or Moved")
+
+
+    try:
         
         if os.getcwd() != temp_path["root_path"]:
             enter_directory(temp_path["root_path"])
         
         
-            
-        if not (verify_directory(temp_path["monthly_tickets"])):
-            create_directory(temp_path["monthly_tickets"])
-            
-            for d in temp_path["in_month_dir"]:
-                if not (verify_directory(d)):
-                    create_directory(d)
-            
-            for d in temp_path['staged_dir']:
-                if not verify_directory(d):
-                    create_directory(d)
+        #### veify if required directories and subdirs were created, if not create 
+        verify_and_createDir('sub_dir')
+        verify_and_createDir('staged_dir')
 
-    # For email attachments 
+        #### deleted dir ERROR output
+        nonVerifiedDir_console_output()
+
+
+        ##### For email attachments 
 
         email_attachments = picktickets_database + c_mar["email_archive"]
         
@@ -66,8 +75,8 @@ def main(c, c_via, c_mar, pickticket_dir, code_dir, picktickets_database):
         
         for file in all_files:
             
-            if os.getcwd() != temp_path["in_month_dir"][0]: # enter into 1-Printed folder 
-                enter_directory(temp_path["in_month_dir"][0])
+            if os.getcwd() != temp_path["sub_dir"][0]: # enter into 1-Printed folder 
+                enter_directory(temp_path["sub_dir"][0])
                 
             
             move_to = email_attachments + temp_path["email_archive"] + rf"\{os.path.basename(file)}"
@@ -99,7 +108,7 @@ def main(c, c_via, c_mar, pickticket_dir, code_dir, picktickets_database):
         updates_to_json(c, temp_path["root_path"])
 
     except Exception as e:
-        print(e)
+        print(repr(e))
 
     
 

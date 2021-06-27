@@ -19,7 +19,7 @@ collection_vars = db["vars"]
 s = sched.scheduler(time.time, time.sleep)
 
 # Refresh Rate
-sec = 1
+sec = 5
 
 
 def run_server(sc, sec):

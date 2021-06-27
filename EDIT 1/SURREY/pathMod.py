@@ -9,26 +9,28 @@ def paths(root_path):
     '''
     # today = date.today()
 
-    m = datetime.now().strftime('%B-%Y')
+    # m = datetime.now().strftime('%B-%Y')
 
     # email_archive = root_path + '\\main'
     # email_archive = root_path + '\\MARKHAM_EMAIL_ARCHIVE'
     email_archive = '\\SURREY_EMAIL_ARCHIVE'
 
 
-    monthly_tickets = root_path + fr"\{m}"
-    in_month_dir = [fr"{monthly_tickets}\1-Printed", fr"{monthly_tickets}\2-Quarantine", fr"{monthly_tickets}\3-Shipped", fr"{monthly_tickets}\4-Invoiced",fr"{monthly_tickets}\5-POI"]
+    # monthly_tickets = root_path + fr"\{m}"
+    sub_dir = [fr"{root_path}\1-Printed", fr"{root_path}\5-Quarantine", fr"{root_path}\6-Shipped", 
+                fr"{root_path}\7-Invoiced",fr"{root_path}\8-POI"]
 
 
-    staged_dir = [fr"{monthly_tickets}\1-Printed\1-Staged"]
+    # staged_dir = [fr"{root_path}\2-East\1-Staged", fr"{root_path}\3-West\1-Staged", fr"{root_path}\4-Parts\1-Staged"]
+    staged_dir = []
 
     all_paths = {
         'root_path' : root_path,
 
         'email_archive' : email_archive,
 
-        'monthly_tickets' : monthly_tickets,
-        'in_month_dir' : in_month_dir,
+        # 'monthly_tickets' : monthly_tickets,
+        'sub_dir' : sub_dir,
         'staged_dir' : staged_dir,
 
     }
